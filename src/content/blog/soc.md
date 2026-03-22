@@ -1,7 +1,7 @@
 ---
 title: "Security Operations Center Lab"
 description: "Opbouw van een volledig functioneel SOC-lab met Wazuh, TheHive, MISP en geautomatiseerde incident response workflows via n8n."
-pubDate: 2025-06-15
+pubDate: 2026-03-22
 category: "Opleidingsproject"
 tags:
   - Wazuh
