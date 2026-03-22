@@ -1,0 +1,96 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const colors: Record<string, string> = {
+  automation:     'green',
+  infrastructure: 'blue',
+  security:       'red',
+  reflectie:      'amber',
+  algemeen:       'green',
+};
+const c = colors[post.data.category];
+const d = post.data.pubDate.toLocaleDateString('nl-BE', { year:'numeric', month:'long', day:'numeric' });
+---
+
+<Base title={`${post.data.title} — Stage Blog`} activePage="blog">
+
+  <!-- POST HERO -->
+  <div class="post-hero">
+    <div class="post-hero-inner">
+      {post.data.week && <div class="eyebrow">Week {post.data.week}</div>}
+      <h1 class="post-title">{post.data.title}</h1>
+      <p class="post-desc">{post.data.description}</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <label>Datum</label>
+          <span>{d}</span>
+        </div>
+        {post.data.week && (
+          <div class="hero-meta-item">
+            <label>Stageweek</label>
+            <span>Week {post.data.week} / 16</span>
+          </div>
+        )}
+        <div class="hero-meta-item">
+          <label>Categorie</label>
+          <span class={`badge badge-${c}`}>{post.data.category}</span>
+        </div>
+      </div>
+      {post.data.tags.length > 0 && (
+        <div class="tags" style="margin-top:22px">
+          {post.data.tags.map(t => <span class="tag">{t}</span>)}
+        </div>
+      )}
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="post-body">
+    <div class="post-body-inner">
+      <a href="/blog" class="back-link">← Alle posts</a>
+      <article class="prose">
+        <Content />
+      </article>
+      <div style="margin-top:60px; padding-top:30px; border-top:1px solid var(--border)">
+        <a href="/blog" class="back-link">← Terug naar overzicht</a>
+      </div>
+    </div>
+  </div>
+
+</Base>
+
+<style>
+.post-hero { padding: 140px 60px 60px; position: relative; border-bottom: 1px solid var(--border); }
+.post-hero::before {
+  content: '';
+  position: absolute; top:0; left:0;
+  width: 60%; height: 100%;
+  background: radial-gradient(ellipse at 20% 50%, var(--green-glow), transparent 70%);
+  pointer-events: none;
+}
+.post-hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index:1; }
+.post-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800; letter-spacing: -1px;
+  line-height: 1.15; margin-bottom: 16px;
+}
+.post-desc {
+  font-size: 1.05rem; color: var(--text-secondary);
+  line-height: 1.8; max-width: 620px; margin-bottom: 28px;
+}
+.post-body { padding: 60px 60px 100px; }
+.post-body-inner { max-width: 1100px; margin: 0 auto; }
+@media (max-width: 768px) {
+  .post-hero { padding: 120px 24px 50px; }
+  .post-body { padding: 40px 24px 80px; }
+}
+</style>

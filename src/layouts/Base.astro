@@ -1,0 +1,34 @@
+---
+interface Props {
+  title?: string;
+  activePage?: string;
+}
+const { title = 'Stage Blog', activePage = '' } = Astro.props;
+---
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <link rel="stylesheet" href="/styles/global.css" />
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">NJ<span>.</span></a>
+  <div class="nav-links">
+    <a href="/"     class={activePage === 'home'  ? 'active' : ''}>Home</a>
+    <a href="/blog" class={activePage === 'blog'  ? 'active' : ''}>Blog</a>
+  </div>
+</nav>
+
+<slot />
+
+<footer>
+  <span>Niels Janssen — R0930158</span>
+  <span>Bachelor Cloud &amp; Cybersecurity — 2026</span>
+</footer>
+
+</body>
+</html>

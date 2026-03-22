@@ -1,111 +1,85 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const colors: Record<string, string> = {
+  automation:     'green',
+  infrastructure: 'blue',
+  security:       'red',
+  reflectie:      'amber',
+  algemeen:       'green',
+};
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Base title="Blog — Niels Janssen" activePage="blog">
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Stage 2026</div>
+      <h1 class="hero-title">
+        Weekelijkse <em>updates</em><br/>van het project
+      </h1>
+      <p class="hero-subtitle">
+        16 weken network automation bij 
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <label>Project</label>
+          <span>Bluenet</span>
+        </div>
+        <div class="hero-meta-item">
+          <label>Posts</label>
+          <span>{posts.length} gepubliceerd</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="listing">
+    <div class="listing-inner">
+      {posts.length === 0
+        ? <p class="empty">Nog geen posts — eerste post komt eraan.</p>
+        : (
+          <div class="posts-grid">
+            {posts.map(post => {
+              const c = colors[post.data.category];
+              const d = post.data.pubDate.toLocaleDateString('nl-BE', { year:'numeric', month:'short', day:'numeric' });
+              return (
+                <a href={`/blog/${post.slug}`} class="post-card">
+                  <div class="post-card-top">
+                    <span class={`badge badge-${c}`}>{post.data.category}</span>
+                    {post.data.week && <span class="week-label">Week {post.data.week}</span>}
+                  </div>
+                  <div class="post-card-title">{post.data.title}</div>
+                  <div class="post-card-desc">{post.data.description}</div>
+                  {post.data.tags.length > 0 && (
+                    <div class="tags">
+                      {post.data.tags.slice(0, 4).map(t => <span class="tag">{t}</span>)}
+                    </div>
+                  )}
+                  <div class="post-card-footer">
+                    <span class="post-date">{d}</span>
+                    <span class="post-arrow">Lees meer →</span>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+</Base>
+
+<style>
+.listing       { padding: 60px 60px 100px; }
+.listing-inner { max-width: 1100px; margin: 0 auto; }
+.empty { color: var(--muted); padding: 60px 0; text-align: center; }
+@media (max-width: 768px) {
+  .listing { padding: 40px 24px 80px; }
+}
+</style>
