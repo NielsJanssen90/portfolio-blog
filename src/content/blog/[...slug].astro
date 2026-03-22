@@ -1,0 +1,54 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection, render } from 'astro:content';
+import { BADGE_COLORS } from '../../consts';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: post,
+  }));
+}
+
+const post = Astro.props;
+const { Content } = await render(post);
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <BaseHead title={post.data.title} description={post.data.description} />
+    <link rel="stylesheet" href="/styles/global.css" />
+  </head>
+  <body>
+    <Header />
+
+    <div class="hero">
+      <div class="hero-inner">
+        <span class={`badge ${BADGE_COLORS[post.data.category] || 'badge-green'}`}>
+          {post.data.category}
+        </span>
+        <h1 class="hero-title" style="margin-top: 16px;">{post.data.title}</h1>
+        <p class="hero-subtitle">{post.data.description}</p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <label>Gepubliceerd</label>
+            <span>{post.data.pubDate.toLocaleDateString('nl-BE', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="section">
+      <a href="/blog" class="back-link">← Terug naar overzicht</a>
+      <div class="prose">
+        <Content />
+      </div>
+    </section>
+
+    <Footer />
+  </body>
+</html>
