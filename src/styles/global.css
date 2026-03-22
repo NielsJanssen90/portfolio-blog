@@ -315,3 +315,14 @@ footer {
   .hero-meta { gap: 24px; }
   .posts-grid { grid-template-columns: 1fr; }
 }
+
+/* ── SECTION ── */
+.section {
+  padding: 80px 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .section { padding: 50px 24px; }
+}
