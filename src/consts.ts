@@ -3,3 +3,11 @@
 
 export const SITE_TITLE = "Project Blog";
 export const SITE_DESCRIPTION = "Welkom op mijn project blog. Hier deel ik ervaringen op mijn reis door het tech landschap waar impulsieve prikkels mij steeds door rabbit holes sleuren en mijn perspectief verbreden.";
+
+// src/consts.ts
+export const BADGE_COLORS: Record<string, string> = {
+  'Stage': 'badge-green',
+  'Opleidingsproject': 'badge-blue',
+  'Persoonlijk project': 'badge-amber',
+  'Professioneel': 'badge-red',
+};
