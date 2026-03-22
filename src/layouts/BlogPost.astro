@@ -3,83 +3,113 @@ import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, week, category = 'algemeen', tags = [] } = Astro.props;
+
+const colors: Record<string, string> = {
+  automation:     'green',
+  infrastructure: 'blue',
+  security:       'red',
+  reflectie:      'amber',
+  algemeen:       'green',
+};
+const c = colors[category];
+const d = pubDate.toLocaleDateString('nl-BE', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
-	</head>
+<html lang="nl">
+  <head>
+    <BaseHead title={title} description={description} />
+    <link rel="stylesheet" href="/styles/global.css" />
+  </head>
+  <body>
+    <Header />
 
-	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+    <div class="post-hero">
+      <div class="post-hero-inner">
+        {week && <div class="eyebrow">Week {week}</div>}
+        <h1 class="post-title">{title}</h1>
+        <p class="post-desc">{description}</p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <label>Datum</label>
+            <span>{d}</span>
+          </div>
+          {week && (
+            <div class="hero-meta-item">
+              <label>Stageweek</label>
+              <span>Week {week} / 16</span>
+            </div>
+          )}
+          <div class="hero-meta-item">
+            <label>Categorie</label>
+            <span class={`badge badge-${c}`}>{category}</span>
+          </div>
+        </div>
+        {tags.length > 0 && (
+          <div class="tags" style="margin-top:22px">
+            {tags.map(t => <span class="tag">{t}</span>)}
+          </div>
+        )}
+      </div>
+    </div>
+
+    <div class="post-body">
+      <div class="post-body-inner">
+        <a href="/blog" class="back-link">← Alle posts</a>
+        <article class="prose">
+          <slot />
+        </article>
+        <div style="margin-top:60px; padding-top:30px; border-top:1px solid var(--border)">
+          <a href="/blog" class="back-link">← Terug naar overzicht</a>
+        </div>
+      </div>
+    </div>
+
+    <Footer />
+  </body>
 </html>
+
+<style>
+.post-hero {
+  padding: 140px 60px 60px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.post-hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 60%; height: 100%;
+  background: radial-gradient(ellipse at 20% 50%, var(--green-glow), transparent 70%);
+  pointer-events: none;
+}
+.post-hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.post-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+.post-desc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  max-width: 620px;
+  margin-bottom: 28px;
+}
+.post-body { padding: 60px 60px 100px; }
+.post-body-inner { max-width: 1100px; margin: 0 auto; }
+
+@media (max-width: 768px) {
+  .post-hero { padding: 120px 24px 50px; }
+  .post-body  { padding: 40px 24px 80px; }
+}
+</style>

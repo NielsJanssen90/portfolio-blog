@@ -1,5 +1,7 @@
 ---
-import Base from '../layouts/Base.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog'))
@@ -15,92 +17,17 @@ const colors: Record<string, string> = {
 };
 ---
 
-<Base title="Niels Janssen — Stage Blog" activePage="home">
+<!doctype html>
+<html lang="nl">
+  <head>
+    <BaseHead title="Niels blog" description="blogtest" />
+    <link rel="stylesheet" href="/styles/global.css" />
+  </head>
+  <body>
+    <Header />
 
-  <div class="hero">
-    <div class="hero-inner">
-      <div class="eyebrow">Stageproject 2026</div>
-      <h1 class="hero-title">
-        Network <em>Automation</em><br/>bij Belgische Defensie
-      </h1>
-      <p class="hero-subtitle">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sixteen weken Ansible,
-        Cisco en Semaphore in een air-gapped militair netwerk. Dit blog volgt het volledige
-        traject van het Bluenet project.
-      </p>
-      <div class="hero-meta">
-        <div class="hero-meta-item">
-          <label>Stagebedrijf</label>
-          <span>Belgische Defensie</span>
-        </div>
-        <div class="hero-meta-item">
-          <label>Project</label>
-          <span>Bluenet</span>
-        </div>
-        <div class="hero-meta-item">
-          <label>Stack</label>
-          <span>Ansible · Cisco · Semaphore · GitLab</span>
-        </div>
-        <div class="hero-meta-item">
-          <label>Looptijd</label>
-          <span>16 weken — 2026</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {posts.length > 0 && (
-    <section class="recent">
-      <div class="recent-inner">
-        <p class="section-label">Laatste updates</p>
-        <h2 class="section-title">Recente posts</h2>
-        <div class="posts-grid">
-          {posts.map(post => {
-            const c = colors[post.data.category];
-            const d = post.data.pubDate.toLocaleDateString('nl-BE', { year:'numeric', month:'short', day:'numeric' });
-            return (
-              <a href={`/blog/${post.slug}`} class="post-card">
-                <div class="post-card-top">
-                  <span class={`badge badge-${c}`}>{post.data.category}</span>
-                  {post.data.week && <span class="week-label">Week {post.data.week}</span>}
-                </div>
-                <div class="post-card-title">{post.data.title}</div>
-                <div class="post-card-desc">{post.data.description}</div>
-                <div class="post-card-footer">
-                  <span class="post-date">{d}</span>
-                  <span class="post-arrow">Lees meer →</span>
-                </div>
-              </a>
-            );
-          })}
-        </div>
-        <a href="/blog" class="all-link">Alle posts bekijken →</a>
-      </div>
-    </section>
-  )}
-
-</Base>
-
-<style>
-.recent       { padding: 70px 60px 100px; }
-.recent-inner { max-width: 1100px; margin: 0 auto; }
-.section-label {
-  font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 2.5px; text-transform: uppercase;
-  color: var(--green); margin-bottom: 10px;
-}
-.section-title {
-  font-size: 1.8rem; font-weight: 800;
-  letter-spacing: -0.8px; margin-bottom: 30px;
-}
-.all-link {
-  display: inline-block;
-  margin-top: 28px;
-  font-size: 0.85rem; font-weight: 600;
-  color: var(--green); text-decoration: none;
-}
-.all-link:hover { color: var(--green-soft); }
-@media (max-width: 768px) {
-  .recent { padding: 50px 24px 80px; }
-}
-</style>
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow">blog</div>
+        <h1 class="hero-title">
+          Network <em
