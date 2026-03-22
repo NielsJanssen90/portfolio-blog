@@ -6,13 +6,14 @@ import { getCollection } from 'astro:content';
 import { BADGE_COLORS } from '../consts';
 
 const posts = (await getCollection('blog'))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 4);
 ---
 
 <!doctype html>
 <html lang="nl">
   <head>
-    <BaseHead title="Home" description="blogtest" />
+    <BaseHead title="Home" description="Portfolio Niels Janssen" />
     <link rel="stylesheet" href="/styles/global.css" />
   </head>
   <body>
@@ -22,91 +23,35 @@ const posts = (await getCollection('blog'))
       <div class="hero-inner">
         <div class="eyebrow">Cloud & Cybersecurity</div>
         <h1 class="hero-title">Niels Janssen</h1>
-        <p class="hero-subtitle">Vier jaar bouwen aan veilige en betrouwbare IT-infrastructuur.</p>
+        <p class="hero-subtitle">Van netwerk automation tot security operations — vier jaar bouwen aan veilige en betrouwbare IT-infrastructuur.</p>
       </div>
     </div>
 
-
     <section class="section">
-      <div class="section-label">
-        <h2 class="section-title">Laatste blogposts</h2>
-      </div>
-      
+      <div class="section-label">Projecten</div>
+      <h2 class="section-title">Wat ik gebouwd heb</h2>
 
       <div class="posts-grid">
-        <a href="#" class="post-card">
-          <div class="post-card-top">
-            <span class="badge badge-green">Stage Project</span>
-            <span class="week-label">16 weken</span>
-          </div>
-          <div class="post-card-title">Network Automation met Ansible & Semaphore</div>
-          <p class="post-card-desc">Ontwerp en implementatie van een Ansible-gebaseerd automation platform voor Cisco netwerkinfrastructuur.</p>
-          <div class="tags">
-            <span class="tag">Ansible</span>
-            <span class="tag">Semaphore</span>
-            <span class="tag">Cisco IOS</span>
-          </div>
-          <div class="post-card-footer">
-            <span class="post-date">2026</span>
-            <span class="post-arrow">Lees meer →</span>
-          </div>
-        </a>
-
-        <a href="#" class="post-card">
-          <div class="post-card-top">
-            <span class="badge badge-blue">Academisch project</span>
-            <span class="week-label">2025</span>
-          </div>
-          <div class="post-card-title">Security Operations Center Lab</div>
-          <p class="post-card-desc">Volledig functioneel SOC-lab met Wazuh, TheHive, MISP en geautomatiseerde workflows via n8n.</p>
-          <div class="tags">
-            <span class="tag">Wazuh</span>
-            <span class="tag">TheHive</span>
-            <span class="tag">MISP</span>
-            <span class="tag">N8n</span>
-          </div>
-          <div class="post-card-footer">
-            <span class="post-date">2025</span>
-            <span class="post-arrow">Lees meer →</span>
-          </div>
-        </a>
-
-        <a href="#" class="post-card">
-          <div class="post-card-top">
-            <span class="badge badge-amber">Persoonlijk</span>
-            <span class="week-label">Doorlopend</span>
-          </div>
-          <div class="post-card-title">Homelab & Self-Hosting</div>
-          <p class="post-card-desc">Docker-gebaseerde services op een UniFi netwerk met VLAN-segmentatie als leer- en experimenteerplatform.</p>
-          <div class="tags">
-            <span class="tag">Docker</span>
-            <span class="tag">Pfsense</span>
-            <span class="tag">UniFi</span>
-            <span class="tag">Linux</span>
-          </div>
-          <div class="post-card-footer">
-            <span class="post-date">Doorlopend</span>
-            <span class="post-arrow">Lees meer →</span>
-          </div>
-        </a>
-
-        <a href="#" class="post-card">
-          <div class="post-card-top">
-            <span class="badge badge-blue">Academisch project</span>
-            <span class="week-label">2025</span>
-          </div>
-          <div class="post-card-title">Penetration Testing & Security Auditing</div>
-          <p class="post-card-desc">Security audit bij een bedrijf met de focus op de netwerk configuratie en infrastructuur.</p>
-          <div class="tags">
-            <span class="tag">Pentesting</span>
-            <span class="tag">CVSS</span>
-            <span class="tag">MITRE ATT&CK</span>
-          </div>
-          <div class="post-card-footer">
-            <span class="post-date">2025</span>
-          </div>
-        </a>
+        {posts.map((post) => (
+          <a href={`/blog/${post.id}/`} class="post-card">
+            <div class="post-card-top">
+              <span class={`badge ${BADGE_COLORS[post.data.category] || 'badge-green'}`}>
+                {post.data.category}
+              </span>
+            </div>
+            <div class="post-card-title">{post.data.title}</div>
+            <p class="post-card-desc">{post.data.description}</p>
+            <div class="post-card-footer">
+              <span class="post-date">
+                {post.data.pubDate.toLocaleDateString('nl-BE', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </span>
+              <span class="post-arrow">Lees meer →</span>
+            </div>
+          </a>
+        ))}
       </div>
     </section>
+
     <Footer />
   </body>
+</html>
