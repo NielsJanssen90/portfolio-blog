@@ -334,3 +334,8 @@ article img,
   height: auto;
   border-radius: 8px; /* Optional: Makes images look nicer */
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+}
