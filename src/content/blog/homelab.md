@@ -32,3 +32,11 @@ Dit project omvat mijn continu evoluerend thuislab
 ![TrueNAS](../images/NAS.jpg)
 
 ![pikvm](../images/pikvm.jpg)
+
+![rackv2](../images/rackv2.jpg)
+
+![rackv2](../images/rackv2-1.jpg)
+
+![rackv2](../images/rackv2-2.jpg)
+
+![rackv2](../images/rackv2-3.jpg)
