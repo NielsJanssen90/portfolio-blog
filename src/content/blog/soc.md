@@ -16,15 +16,7 @@ tags:
 
 ## Wat is dit project?
 
-Voor mijn bachelorproef heb ik een volledig functioneel Security Operations Center (SOC) lab gebouwd. Het doel was om te laten zien hoe een organisatie met open-source tooling een professionele security monitoring en incident response pipeline kan opzetten — van detectie tot geautomatiseerde afhandeling.
-
-Het volledige lab draait in Docker op een Debian mini-PC met een Intel i5 11e generatie processor en 64GB RAM.
-
-## Waarom een SOC lab?
-
-Veel organisaties worstelen met security monitoring. Ze hebben wel firewalls en antivirus, maar missen het overzicht: wat gebeurt er op het netwerk? Welke alerts zijn kritiek? En hoe reageer je snel en consistent op incidenten?
-
-Een SOC biedt dat overzicht. Door een lab te bouwen dat alle componenten van een echte SOC bevat, heb ik niet alleen geleerd hoe elke tool werkt, maar ook hoe ze samenwerken in een geïntegreerde pipeline.
+In een onderwijsproject heb ik een volledig functioneel Security Operations Center (SOC) lab gebouwd. Het doel was om te laten zien hoe ik met open-source tooling een professionele security monitoring en incident response pipeline kan opzetten — van detectie tot geautomatiseerde afhandeling.
 
 ## Architectuur
 
@@ -32,14 +24,14 @@ Het lab bestaat uit de volgende componenten:
 
 ### Detectie & Monitoring
 
-- **Wazuh** als SIEM — verzamelt en correleert security events van alle aangesloten systemen, genereert alerts op basis van rules en decoders
+- **Wazuh** als SIEM — verzamelt en correleert security events van alle aangesloten systemen, genereert alerts op basis van custom rules
 - **Suricata** als IDS — analyseert netwerkverkeer op verdachte patronen, geïntegreerd via pfSense
 - **pfSense** als firewall — netwerkbeveiliging en traffic routing, met Suricata als inline IDS
 - **OpenVAS** voor vulnerability scanning — periodieke scans om kwetsbaarheden in het netwerk te identificeren
 
 ### Incident Response
 
-- **TheHive** voor case management — elke alert wordt een case met taken, observables en een volledige audit trail
+- **TheHive** voor case management — Via n8n komen een selectief aantal alerts hier terrecht verrijkt met nuttige informatie. Afhankelijk van de ernstigheids factor ,bepaald door custom rules in wazuh, wordt er in sommige gevallen automatisch een case gemaakt. 
 - **MISP** voor threat intelligence — IOC's (Indicators of Compromise) worden centraal beheerd en gebruikt voor verrijking van alerts
 
 ### Automatisering
@@ -72,8 +64,7 @@ Het project kende een aantal significante uitdagingen:
 
 ## Wat heb ik geleerd?
 
-Dit project heeft mij een diepgaand begrip gegeven van hoe security operations in de praktijk werken. Niet alleen de individuele tools — die leer je snel kennen — maar vooral hoe je ze integreert tot een samenwerkend geheel.
+Dit project heeft mij een diepgaand begrip gegeven van hoe security operations in de praktijk werken. Niet alleen de individuele tools maar vooral hoe je ze integreert tot een samenwerkend geheel.
 
 De belangrijkste les: automatisering is essentieel in security operations. Een SOC die volledig draait op manuele analyse schaalt niet. Door de alert-to-case pipeline te automatiseren, kan een analyst zich focussen op wat echt telt: het beoordelen en afhandelen van incidenten, in plaats van het handmatig kopiëren van data tussen systemen.
 
-Daarnaast heb ik geleerd dat een goed lab bouwen een iteratief proces is. De eerste versie van de n8n workflow werkte, maar was fragiel. Pas na meerdere iteraties en het testen met realistische scenario's werd het een betrouwbaar systeem.
