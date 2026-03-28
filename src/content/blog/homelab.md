@@ -13,9 +13,13 @@ tags:
   - Security
 ---
 
-## Wat is dit project?
+# HomeLab
 
-Dit project omvat mijn continu evoluerend thuislab
+Dit project omvat de evolutie van mijn thuislab. 
+De plaats waar ik interesses ontdek, test en toepas. Steeds strevend naar verbetering. 
+
+Dit alles is klein begonnen, met een synology NAS toen cloudopslag nog niet populair was. Ik was geïnteresseerd en wou hier meer over weten. Op deze NAS ontdekte ik docker en het hosten van services. Dit was voor mij de "gateway drug" naar de vorm die mijn thuislab  ondertussen gekregen heeft. 
+
 
 ## Architectuur
 
@@ -38,5 +42,3 @@ Dit project omvat mijn continu evoluerend thuislab
 ![rackv2](../images/rackv2-1.jpg)
 
 ![rackv2](../images/rackv2-2.jpg)
-
-![rackv2](../images/rackv2-3.jpg)
