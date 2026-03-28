@@ -326,3 +326,11 @@ footer {
 @media (max-width: 768px) {
   .section { padding: 50px 24px; }
 }
+
+/* Add this to your global stylesheet */
+article img, 
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px; /* Optional: Makes images look nicer */
+}
