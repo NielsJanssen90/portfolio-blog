@@ -7,7 +7,7 @@ import Footer from '../components/Footer.astro';
 <!doctype html>
 <html lang="nl">
   <head>
-    <BaseHead title="Stage" description="Afstudeerstage bij de Belgische Defensie — Project Bluenet" />
+    <BaseHead title="Stage" description="Afstudeerstage" />
     <link rel="stylesheet" href="/styles/global.css" />
   </head>
   <body>
@@ -16,16 +16,16 @@ import Footer from '../components/Footer.astro';
     <div class="hero">
       <div class="hero-inner">
         <div class="eyebrow">Afstudeerstage</div>
-        <h2 class="hero-title">Project <em>Bluenet</em></h2>
-        <p class="hero-subtitle">Netwerkautomatisatie bij de Belgische Defensie</p>
+        <h2 class="hero-title">Project <em>Network Automation</em></h2>
+        <p class="hero-subtitle">Network Automation met Ansible, Semaphore en Gitlab</p>
         <div class="hero-meta">
           <div class="hero-meta-item">
             <label>Organisatie</label>
-            <span>Belgische Defensie</span>
+            <span>Placeholder</span>
           </div>
           <div class="hero-meta-item">
             <label>Periode</label>
-            <span>2025 – 2026 (16 weken)</span>
+            <span>2026 (16 weken)</span>
           </div>
           <div class="hero-meta-item">
             <label>Focus</label>
@@ -38,60 +38,117 @@ import Footer from '../components/Footer.astro';
     <section class="section">
       <div class="prose">
 
-        <h2>Samenvatting</h2>
+        <h2>Objectief</h2>
         <p>
-          Tijdens mijn afstudeerstage bij de Belgische Defensie ontwikkelde ik
-          <strong>Bluenet</strong> — een Ansible-gebaseerd netwerkautomatisatieplatform
-          voor het beheer van ±150 Cisco IOS/IOS-XE apparaten (Catalyst 2960C en 9300 series).
-          Het volledige project werd gerealiseerd in een beveiligde, air-gapped omgeving
-          zonder internettoegang.
+          Het doel van deze stage was het ontwerpen en implementeren van een
+          Ansible-gebaseerd network automation platform voor het beheer van
+          Cisco netwerkinfrastructuur op een lokale productie-site. Het platform
+          werd aangestuurd via Semaphore als orchestratie-interface, draaiend in
+          Docker op een gehardende (CIS Level 1) development server. GitLab
+          draaide op een aparte productie-server en diende als versiebeheer,
+          waar de network automation repository, configuratie-backups en
+          inventory rapporten centraal werden opgeslagen.
         </p>
-
-        <h2>Probleemstelling</h2>
         <p>
-          [Beschrijf hier het probleem dat je moest oplossen. Waarom was automatisatie
-          nodig? Wat waren de beperkingen van de huidige werkwijze?]
+          Het volledige project werd gerealiseerd in een beveiligde, air-gapped
+          omgeving zonder internettoegang. Alle tools, Docker images en Ansible
+          collections werden handmatig overgezet via tar-bestanden.
         </p>
 
         <h2>Aanpak</h2>
         <p>
-          Als execution engine werd Ansible Semaphore ingezet, met GitLab als
-          versiebeheersysteem. Omdat de omgeving volledig air-gapped was, moesten
-          alle tools, Docker images en Ansible collections handmatig worden
-          overgezet via tar-bestanden.
-        </p>
-        <p>
-          De codebase volgde een drie-branch strategie (development → staging → main)
-          voor gecontroleerde deployments. Een CI/CD pipeline met yamllint en
-          ansible-lint werd opgezet met een offline GitLab Runner.
-        </p>
-
-        <h2>Resultaten</h2>
-        <p>
-          Het platform omvatte bij oplevering de volgende componenten:
+          Het project volgde een opbouwende aanpak in drie niveaus, waarbij elke
+          fase voortbouwde op het vertrouwen en de veiligheidsgaranties van de
+          vorige:
         </p>
         <ul>
-          <li><strong>Safe Deployment Framework</strong> — pre/post-change validatie
-          met automatische rollback via <code>configure terminal revert timer</code></li>
-          <li><strong>Geautomatiseerde backups</strong> — configuratiebackups via de
-          GitLab Commits API met environment-based rapportage (development, staging, production)</li>
-          <li><strong>CI/CD pipeline</strong> — linting en validatie bij elke commit,
-          volledig offline operationeel</li>
-          <li><strong>Inventarisbeheer</strong> — hostnames als keys met ansible_host
-          voor IP-adressen, schaalbaar naar 150+ apparaten</li>
+          <li><strong>Read operations</strong> — device informatie uitlezen en rapporteren</li>
+          <li><strong>Backup automation</strong> — configuraties veiligstellen met een volledige geschiedenis via version control</li>
+          <li><strong>Write operations</strong> — configuratiewijzigingen veilig uitrollen via een herbruikbaar safe deployment framework</li>
         </ul>
-
-        <h2>Technische uitdagingen</h2>
         <p>
-          [Beschrijf hier 2-3 significante uitdagingen die je tegenkwam en hoe je
-          ze hebt opgelost. Denk aan: SSH compatibiliteit met legacy switches,
-          de urlencode slash-encoding bug, offline dependency management, etc.]
+          Elke playbook doorliep een gefaseerde uitrolstrategie om risico's te
+          minimaliseren: eerst ontwikkeling en testing op het fysieke Cisco lab,
+          vervolgens een light production uitrol op een beperkt aantal niet-kritieke
+          toestellen, en tot slot de uitrol naar alle devices op de lokale site.
         </p>
 
-        <h2>Reflectie</h2>
+        <h2>Infrastructuur</h2>
         <p>
-          [Korte reflectie op wat je geleerd hebt. Wat zou je anders doen?
-          Wat neem je mee naar de toekomst?]
+          Als basis werd een fysiek Cisco lab opgebouwd dat een groot deel van de
+          productieomgeving simuleerde. De beschikbare hardware werd
+          geïnventariseerd, lab toestellen werden geselecteerd op basis van
+          analysecriteria, en een lab topologie werd ontworpen. Elk lab device
+          werd voorzien van out-of-band console access via USB-serial kabels
+          aangesloten op de development server, zodat bij netwerk- of
+          configuratieproblemen elk toestel nog bereikbaar bleef.
+        </p>
+        <p>
+          Voorafgaand aan het netwerkwerk werd een Debian hardening playbook
+          ontwikkeld op basis van CIS Level 1 benchmarks. Dit playbook werd
+          getest op Debian 11, 12 en 13 en vervolgens uitgerold op de
+          development server zelf. Dit diende tegelijk als leertraject voor
+          Ansible, GitLab en Semaphore.
+        </p>
+
+        <h2>Read Operations & Inventory Reporting</h2>
+        <p>
+          Een read playbook werd ontwikkeld dat device informatie uitlas —
+          hostname, serial number, IOS versie en platform — van alle devices
+          uit het Ansible inventory. De output werd gegenereerd in zowel CSV
+          formaat (voor export naar Excel via corporate SharePoint) als Markdown
+          formaat (voor een leesbaar overzicht in GitLab). Rapporten werden
+          automatisch geüpload naar een dedicated reporting repository in GitLab.
+        </p>
+
+        <h2>Backup Automation</h2>
+        <p>
+          Een backup playbook werd gebouwd dat de running-config en startup-config
+          van alle devices veiligstelde. Backups werden opgeslagen in GitLab via
+          de Commits API, waardoor Git zelf de volledige configuratiegeschiedenis
+          bijhield. Scheduling werd geconfigureerd in Semaphore voor dagelijkse
+          en wekelijkse backups. Na succesvolle validatie in het lab werd het
+          systeem uitgerold naar alle productie-devices op de lokale site.
+        </p>
+
+        <h2>Write Operations & Safe Deployment Framework</h2>
+        <p>
+          De write operations fase vormde de kern van het project. De focus lag
+          niet zozeer op de individuele playbooks, maar op het ontwerpen van een
+          veilig en robuust deployment framework dat herbruikbaar was voor elke
+          toekomstige write operatie. Dit framework omvatte:
+        </p>
+        <ul>
+          <li><strong>Pre-change fase</strong> — automatische backup van de huidige
+          running-config vóór elke wijziging, configuratie snapshot opslaan voor
+          vergelijking achteraf</li>
+          <li><strong>Dry-run modus</strong> — elke write playbook eerst uitvoeren in
+          Ansible check mode om te valideren wat er zou veranderen zonder
+          daadwerkelijk te wijzigen</li>
+          <li><strong>Rollback mechanisme</strong> — bij falen automatisch terugkeren
+          naar de pre-change backup via <code>configure terminal revert timer</code>,
+          zodat het device nooit in een onbekende staat achterbleef</li>
+          <li><strong>Post-change validatie</strong> — automatisch vergelijken van de
+          configuratie voor en na de wijziging, met rapportage van exact welke
+          regels werden aangepast</li>
+        </ul>
+        <p>
+          Het framework werd gevalideerd met drie write playbooks: een banner
+          playbook (minimaal risico, ideaal voor end-to-end validatie), een
+          SNMPv3 playbook (consistente authenticatie en encryptie configuratie
+          over alle devices), en een VLAN consistentie playbook (gewenste
+          VLAN-database als source of truth, ontbrekende VLANs aanvullen en
+          afwijkingen signaleren). Alle playbooks maakten gebruik van Jinja2
+          templates voor herbruikbare configuratieblokken.
+        </p>
+
+        <h2>Kennisoverdracht</h2>
+        <p>
+          Na de technische oplevering werd een presentatie en workshop
+          georganiseerd voor collega's. Hierin werden de ontwikkelde playbooks
+          gedemonstreerd en de basisprincipes van Ansible network automation
+          toegelicht via hands-on sessies. Lesmateriaal en uitgebreide
+          documentatie werden opgeleverd ter ondersteuning van het team.
         </p>
 
         <h2>Documenten</h2>
