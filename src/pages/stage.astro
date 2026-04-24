@@ -44,15 +44,13 @@ import Footer from '../components/Footer.astro';
           Ansible-gebaseerd network automation platform voor het beheer van
           Cisco netwerkinfrastructuur op een lokale productie-site. Het platform
           werd aangestuurd via Semaphore als orchestratie-interface, draaiend in
-          Docker op een gehardende (CIS Level 1) development server. GitLab
+          Docker op een gehardende development server. GitLab
           draaide op een aparte productie-server en diende als versiebeheer,
           waar de network automation repository, configuratie-backups en
           inventory rapporten centraal werden opgeslagen.
         </p>
         <p>
-          Het volledige project werd gerealiseerd in een beveiligde, air-gapped
-          omgeving zonder internettoegang. Alle tools, Docker images en Ansible
-          collections werden handmatig overgezet via tar-bestanden.
+          Het volledige project werd gerealiseerd in een omgeving zonder internettoegang. 
         </p>
 
         <h2>Aanpak</h2>
@@ -62,12 +60,12 @@ import Footer from '../components/Footer.astro';
           vorige:
         </p>
         <ul>
-          <li><strong>Read operations</strong> — device informatie uitlezen en rapporteren</li>
-          <li><strong>Backup automation</strong> — configuraties veiligstellen met een volledige geschiedenis via version control</li>
-          <li><strong>Write operations</strong> — configuratiewijzigingen veilig uitrollen via een herbruikbaar safe deployment framework</li>
+          <li><strong>Read operations</strong> - device informatie uitlezen en rapporteren</li>
+          <li><strong>Backup automation</strong> - configuraties veiligstellen met een volledige geschiedenis via version control</li>
+          <li><strong>Write operations</strong> - configuratiewijzigingen veilig uitrollen via een herbruikbaar safe deployment framework</li>
         </ul>
         <p>
-          Elke playbook doorliep een gefaseerde uitrolstrategie om risico's te
+          Elk playbook doorliep een gefaseerde uitrolstrategie om risico's te
           minimaliseren: eerst ontwikkeling en testing op het fysieke Cisco lab,
           vervolgens een light production uitrol op een beperkt aantal niet-kritieke
           toestellen, en tot slot de uitrol naar alle devices op de lokale site.
