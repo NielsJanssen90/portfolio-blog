@@ -1,0 +1,109 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <BaseHead title="Stage" description="Afstudeerstage bij de Belgische Defensie — Project Bluenet" />
+    <link rel="stylesheet" href="/styles/global.css" />
+  </head>
+  <body>
+    <Header />
+
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow">Afstudeerstage</div>
+        <h2 class="hero-title">Project <em>Bluenet</em></h2>
+        <p class="hero-subtitle">Netwerkautomatisatie bij de Belgische Defensie</p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <label>Organisatie</label>
+            <span>Belgische Defensie</span>
+          </div>
+          <div class="hero-meta-item">
+            <label>Periode</label>
+            <span>2025 – 2026 (16 weken)</span>
+          </div>
+          <div class="hero-meta-item">
+            <label>Focus</label>
+            <span>Ansible · Cisco IOS · GitLab</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="prose">
+
+        <h2>Samenvatting</h2>
+        <p>
+          Tijdens mijn afstudeerstage bij de Belgische Defensie ontwikkelde ik
+          <strong>Bluenet</strong> — een Ansible-gebaseerd netwerkautomatisatieplatform
+          voor het beheer van ±150 Cisco IOS/IOS-XE apparaten (Catalyst 2960C en 9300 series).
+          Het volledige project werd gerealiseerd in een beveiligde, air-gapped omgeving
+          zonder internettoegang.
+        </p>
+
+        <h2>Probleemstelling</h2>
+        <p>
+          [Beschrijf hier het probleem dat je moest oplossen. Waarom was automatisatie
+          nodig? Wat waren de beperkingen van de huidige werkwijze?]
+        </p>
+
+        <h2>Aanpak</h2>
+        <p>
+          Als execution engine werd Ansible Semaphore ingezet, met GitLab als
+          versiebeheersysteem. Omdat de omgeving volledig air-gapped was, moesten
+          alle tools, Docker images en Ansible collections handmatig worden
+          overgezet via tar-bestanden.
+        </p>
+        <p>
+          De codebase volgde een drie-branch strategie (development → staging → main)
+          voor gecontroleerde deployments. Een CI/CD pipeline met yamllint en
+          ansible-lint werd opgezet met een offline GitLab Runner.
+        </p>
+
+        <h2>Resultaten</h2>
+        <p>
+          Het platform omvatte bij oplevering de volgende componenten:
+        </p>
+        <ul>
+          <li><strong>Safe Deployment Framework</strong> — pre/post-change validatie
+          met automatische rollback via <code>configure terminal revert timer</code></li>
+          <li><strong>Geautomatiseerde backups</strong> — configuratiebackups via de
+          GitLab Commits API met environment-based rapportage (development, staging, production)</li>
+          <li><strong>CI/CD pipeline</strong> — linting en validatie bij elke commit,
+          volledig offline operationeel</li>
+          <li><strong>Inventarisbeheer</strong> — hostnames als keys met ansible_host
+          voor IP-adressen, schaalbaar naar 150+ apparaten</li>
+        </ul>
+
+        <h2>Technische uitdagingen</h2>
+        <p>
+          [Beschrijf hier 2-3 significante uitdagingen die je tegenkwam en hoe je
+          ze hebt opgelost. Denk aan: SSH compatibiliteit met legacy switches,
+          de urlencode slash-encoding bug, offline dependency management, etc.]
+        </p>
+
+        <h2>Reflectie</h2>
+        <p>
+          [Korte reflectie op wat je geleerd hebt. Wat zou je anders doen?
+          Wat neem je mee naar de toekomst?]
+        </p>
+
+        <h2>Documenten</h2>
+        <p>
+          <a href="/documents/projectplan.pdf" target="_blank">Projectplan →</a><br>
+          <a href="/documents/realisatiedocument.pdf" target="_blank">Realisatiedocument →</a><br>
+          <a href="/documents/reflectie.pdf" target="_blank">Reflectie →</a>
+        </p>
+
+      </div>
+    </section>
+
+    <Footer />
+  </body>
+</html>
