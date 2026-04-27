@@ -35,6 +35,8 @@ Het weerstation bevat een combinatie van digitale en magnetische sensoren:
 - **BH1750 (GY-30)** - omgevingslicht (I²C)
 - **6× Hall-sensoren (KY-003 & KY-024)** - voor anemometer, pluviometer en windrichting
 
+![Weerstation](../images/weerstation-sensoren.png)
+
 ### Behuizing
 
 Alle mechanische onderdelen printte ik zelf. Voor de prototypes gebruikte ik PLA, maar de definitieve versie wordt geprint in PETG of ABS voor betere weersbestendigheid en UV-resistentie. De centrale elektronica zit in een transparante IP65 afdichtingsdoos.
@@ -127,7 +129,7 @@ In Home Assistant bouwde ik een dashboard met meerdere views: **Meteo** (overzic
 
 Per categorie zijn er meerdere kaarten met verschillende tijdsvensters. Zo zie je bijvoorbeeld voor regen tegelijk de waarde van het laatste uur, vandaag, deze week, deze maand en dit jaar.
 
-![Weerstation-HA](../images/weerstation-ha.jpg)
+![Weerstation-HA](../images/weerstation-ha.png)
 
 ## Wat ik geleerd heb
 
