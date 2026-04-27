@@ -1,5 +1,5 @@
 ---
-title: "TrueNAS Scale — Onderzoek naar een Open Source HomeLab"
+title: "TrueNAS Scale - Onderzoek naar een Open Source HomeLab"
 description: "Een onderzoeksopdracht waarin ik TrueNAS Scale verken als basis voor een homelab: ZFS, hardware-keuzes, alternatieven en mijn eigen labopstelling met gerecupereerde componenten."
 pubDate: 2023-03-22
 category: "Opleidingsproject"
@@ -15,7 +15,7 @@ tags:
 
 ## Wat is dit project?
 
-Voor het vak IT Essentials kreeg ik de kans om een onderzoeksopdracht te doen rond een onderwerp naar keuze. Aangezien ik op dat moment al een tijd geinteresseerd was door het idee van een eigen home server — voor opslag, het zelf hosten van services, en gewoonweg om bij te leren, koos ik voor **TrueNAS Scale** als onderwerp. Het resultaat is een paper waarin ik dieper inga op het systeem, de hardware-overwegingen, het ZFS-bestandssysteem en een concrete labopstelling.
+Voor het vak IT Essentials kreeg ik de kans om een onderzoeksopdracht te doen rond een onderwerp naar keuze. Aangezien ik op dat moment al een tijd geinteresseerd was door het idee van een eigen home server - voor opslag, het zelf hosten van services, en gewoonweg om bij te leren, koos ik voor **TrueNAS Scale** als onderwerp. Het resultaat is een paper waarin ik dieper inga op het systeem, de hardware-overwegingen, het ZFS-bestandssysteem en een concrete labopstelling.
 
 ## Link naar het verslag
 
@@ -27,9 +27,9 @@ TrueNAS Scale is een gratis en open source software-defined storage solution geb
 
 Tijdens mijn onderzoek vergeleek ik het met de meest populaire alternatieven:
 
-- **Unraid** — flexibel met mix-and-match schijven en een actieve community, maar niet open source en vereist een licentie
-- **QNAP & Synology** — kant-en-klare toestellen met een polished interface, maar je zit vast aan het meegeleverde besturingssysteem en betaalt aanzienlijk meer
-- **Proxmox** — uitstekend als hypervisor first, maar minder geschikt als je de focus op storage legt
+- **Unraid** - flexibel met mix-and-match schijven en een actieve community, maar niet open source en vereist een licentie
+- **QNAP & Synology** - kant-en-klare toestellen met een polished interface, maar je zit vast aan het meegeleverde besturingssysteem en betaalt aanzienlijk meer
+- **Proxmox** - uitstekend als hypervisor first, maar minder geschikt als je de focus op storage legt
 
 Voor mijn use case won TrueNAS Scale op alle vlakken: ZFS als bestandssysteem, op Debian gebaseerd, ingebouwde virtualisatie, eindeloze configuratiemogelijkheden, weinig hardware-beperkingen, en volledig gratis.
 
@@ -39,15 +39,15 @@ ZFS is wat TrueNAS écht onderscheidt van de meeste alternatieven. In de paper d
 
 ### Storage pools en RAIDZ
 
-ZFS organiseert schijven in **pools** met verschillende redundantie-niveaus. RAIDZ1 verdraagt het uitvallen van één schijf, RAIDZ2 van twee, en RAIDZ3 van drie. Hogere pariteit betekent meer bescherming, maar minder netto opslagcapaciteit.
+ZFS organiseert schijven in pools met verschillende redundantie-niveaus. RAIDZ1 verdraagt het uitvallen van één schijf, RAIDZ2 van twee, en RAIDZ3 van drie. Hogere pariteit betekent meer bescherming, maar minder netto opslagcapaciteit.
 
 ### Datasets
 
-Een **dataset** is een logische container binnen een pool. Vergelijkbaar met een map in een traditioneel bestandssysteem, maar met krachtige extra mogelijkheden zoals compressie, quota, snapshots en aparte share-instellingen per dataset.
+Een dataset is een logische container binnen een pool. Vergelijkbaar met een map in een traditioneel bestandssysteem, maar met krachtige extra mogelijkheden zoals compressie, quota, snapshots en aparte share-instellingen per dataset.
 
 ### Read & write cache (ARC, L2ARC, ZIL)
 
-ZFS gebruikt RAM intensief als **ARC** (Adaptive Replacement Cache) — recent gelezen "hot data" wordt in het werkgeheugen bewaard voor razendsnelle herhaalde toegang. Wanneer de ARC vol is, kan een snelle SSD ingezet worden als **L2ARC** (Level 2 ARC) voor een tweede cache-laag.
+ZFS gebruikt RAM intensief als **ARC** (Adaptive Replacement Cache). recent gelezen "hot data" wordt in het werkgeheugen bewaard voor razendsnelle herhaalde toegang. Wanneer de ARC vol is, kan een snelle SSD ingezet worden als **L2ARC** (Level 2 ARC) voor een tweede cache-laag.
 
 Voor schrijfoperaties bestaat de **ZIL** (ZFS Intent Log), die schrijfoperaties bundelt voor betere prestaties en gegevensintegriteit garandeert bij een onverwachte stroomonderbreking.
 
@@ -59,12 +59,12 @@ Mijn favoriete feature: ZFS snapshots zijn vrijwel instant en bijna gratis qua o
 
 Een home server bouwen hoeft geen fortuin te kosten gerecupereerde componenten van oude desktops doen vaak prima dienst. Wel zijn er een aantal specifieke overwegingen:
 
-- **Moederbord** — let op CPU-socket, aantal RAM-slots, ECC-ondersteuning, SATA-poorten en netwerk
-- **CPU** — moet zeker virtualisatie ondersteunen (Intel VT-x of AMD-V); meer cores = meer VM's
-- **RAM** — ECC is een plus voor data-integriteit, maar niet strikt noodzakelijk; meer RAM = grotere ARC = betere prestaties
-- **Opslag** — combinatie van HDD's voor capaciteit en SSD's voor cache (L2ARC/ZIL)
-- **PSU** — kies een efficiënte en eventueel modulaire voeding
-- **Behuizing** — afhankelijk van locatie: stille tower in de woonkamer, of een 19" rackmount in een bergruimte
+- **Moederbord** - let op CPU-socket, aantal RAM-slots, ECC-ondersteuning, SATA-poorten en netwerk
+- **CPU** - moet zeker virtualisatie ondersteunen (Intel VT-x of AMD-V); meer cores = meer VM's
+- **RAM** - ECC is een plus voor data-integriteit, maar niet strikt noodzakelijk; meer RAM = grotere ARC = betere prestaties
+- **Opslag** - combinatie van HDD's voor capaciteit en SSD's voor cache (L2ARC/ZIL)
+- **PSU** - kies een efficiënte en eventueel modulaire voeding
+- **Behuizing** - afhankelijk van locatie: stille tower in de woonkamer, of een 19" rackmount in een bergruimte
 
 Bij continu draaiende systemen is idle stroomverbruik een belangrijk aandachtspunt. 
 
