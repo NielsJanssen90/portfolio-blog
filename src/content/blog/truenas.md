@@ -1,6 +1,6 @@
 ---
-title: "TrueNAS Scale — Onderzoek naar een Open Source Home Server"
-description: "Een onderzoeksopdracht waarin ik TrueNAS Scale verken als basis voor een home server: ZFS, hardware-keuzes, alternatieven en mijn eigen labopstelling met gerecupereerde componenten."
+title: "TrueNAS Scale — Onderzoek naar een Open Source HomeLab"
+description: "Een onderzoeksopdracht waarin ik TrueNAS Scale verken als basis voor een homelab: ZFS, hardware-keuzes, alternatieven en mijn eigen labopstelling met gerecupereerde componenten."
 pubDate: 2023-03-22
 category: "Opleidingsproject"
 tags:
@@ -16,6 +16,10 @@ tags:
 ## Wat is dit project?
 
 Voor het vak IT Essentials kreeg ik de kans om een onderzoeksopdracht te doen rond een onderwerp naar keuze. Aangezien ik op dat moment al een tijd geinteresseerd was door het idee van een eigen home server — voor opslag, het zelf hosten van services, en gewoonweg om bij te leren, koos ik voor **TrueNAS Scale** als onderwerp. Het resultaat is een paper waarin ik dieper inga op het systeem, de hardware-overwegingen, het ZFS-bestandssysteem en een concrete labopstelling.
+
+## Link naar het verslag
+
+<a href="/documents/truenas.pdf" target="_blank">open het verslag (PDF) →</a>
 
 ## Waarom TrueNAS Scale?
 
@@ -97,17 +101,13 @@ In plaats van apps rechtstreeks op TrueNAS te draaien, host ik ze in een Debian 
 
 ### Netwerktopologie
 
-De server zit achter een **pfSense firewall** met tailscale, waardoor ik vanop afstand veilig bij mijn data kan zonder poorten open te zetten.
+De server zit achter een pfSense firewall met tailscale, waardoor ik vanop afstand veilig bij mijn data kan zonder poorten open te zetten.
 
 ## Wat ik geleerd heb
 
-Dit was mijn eerste echte deep-dive in storage en virtualisatie. Voor het project wist ik wel wat een NAS was, maar de subtielere zaken — waarom ZFS zoveel RAM gebruikt, het verschil tussen ARC, L2ARC en ZIL, hoe RAIDZ-redundantie werkt — heb ik tijdens dit onderzoek leren begrijpen. Daarnaast was het een eerste kennismaking met **rack-mounting**, het bouwen van een server vanaf de grond, en het denken over zaken zoals airflow, geluidsniveau en stroomverbruik bij een 24/7 systeem.
+Dit was mijn eerste echte deep-dive in storage en virtualisatie. Voor het project had ik wel een basiskennis, maar de subtielere zaken zoals ZFS, het Copy on Write principe, het verschil tussen ARC, L2ARC en ZIL, heb ik tijdens dit onderzoek leren begrijpen.
 
-Deze opstelling vormde achteraf de basis van mijn homelab. Ondertussen is dat verder geëvolueerd — server en NAS heb ik later opgesplitst in twee aparte machines voor betere SMART-monitoring, en de hardware werd geüpgraded — maar dit project was waar het allemaal begon.
-
-## Documenten
-
-<a href="/documents/truenas.pdf" target="_blank">Open de paper (PDF) →</a>
+Deze opstelling vormde achteraf de basis van mijn homelab. Ondertussen is dat verder geëvolueerd. De server en NAS heb ik later opgesplitst in twee aparte machines voor betere SMART-monitoring, en de hardware werd geüpgraded. Maar dit project was waar het allemaal begon.
 
 ## Demo
 
