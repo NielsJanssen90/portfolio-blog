@@ -29,11 +29,11 @@ Dit alles is klein begonnen, met een synology NAS toen cloudopslag nog niet popu
 
 ![synology](../images/synology.jpg)
 
-![server-v1](../images/svr1.jpg)
+![server-v1](../images/nasv1.jpg)
 
 ![rackv1](../images/rackv1.jpg)
 
-![TrueNAS](../images/NAS.jpg)
+![TrueNAS](../images/nasv2.jpg)
 
 ![pikvm](../images/pikvm.jpg)
 
