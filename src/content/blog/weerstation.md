@@ -16,6 +16,10 @@ tags:
 
 Voor het vak IT Essentials bouwde ik een volledig functioneel weerstation met een ESP32 als basis en Home Assistant voor visualisatie. Het doel was om binnen het kwartaal een basis weerstation op te leveren gebouwd op het ESP32 platform. Ik vond dit echter een heel interessante opdracht en besloot mij hier volledig in te investeren. 
 
+## Link naar paper
+
+<a href="/documents/weerstation.pdf" target="_blank">open de paper (PDF) →</a>
+
 ## Schema
 
 ![Weerstation-Schema](../images/weerstation-schema.png)
@@ -142,5 +146,3 @@ Ik vond dit een heel leerrijke ervaring!
 [Demo op YouTube ->](https://www.youtube.com/watch?v=rKgtdgKVfDY)
 
 ![Weerstation](../images/weerstation4.jpg)
-
-![Weerstation](../images/weerstation1.jpg)
